@@ -4,6 +4,16 @@ var app = express()
 var mysql = require('mysql')
 
 /**
+ * import routes
+ */
+var index = require('./routes/index')
+var studets = require('./routes/students')
+var view= require('./routes/students_view')
+var login = require('./routes/login')
+var signup = require('./routes/signup')
+var home = require('./routes/home')
+
+/**
  * This middleware provides a consistent API 
  * for MySQL connections during request/response life cycle
  */
@@ -32,13 +42,6 @@ app.use(myConnection(mysql, dbOptions, 'pool'))
  * setting up the templating view engine
  */
 app.set('view engine', 'ejs')
-
-/**
- * import routes/index.js
- * import routes/users.js
- */
-var index = require('./routes/index')
-var users = require('./routes/students')
 
 
 /**
@@ -84,14 +87,6 @@ app.use(methodOverride(function (req, res) {
     }
 }))
 
-/**
- * This module shows flash messages
- * generally used to show success or error messages
- * 
- * Flash messages are stored in session
- * So, we also have to install and use 
- * cookie-parser & session modules
- */
 var flash = require('express-flash')
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -103,14 +98,21 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 60000 }
 }))
+
+
 app.use(flash())
 
-
-app.use('/', index)
-app.use('/users', users)
+app.use('/',home)
+app.use('/index', index)
+app.use('/users', studets)
+app.use('/view', view)
+app.use('/login', login)
+app.use('/signup', signup)
 app.use(express.static(__dirname + '/dist'));
 
 var port = process.env.PORT || 80;
 app.listen(port, function () {
     console.log('Server running on port ' + port);
 })
+
+
