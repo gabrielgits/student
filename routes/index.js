@@ -1,8 +1,9 @@
 var express = require('express')
 var app = express()
+const isAuthenticated = require('./authMiddleware');
 
 // SHOW LIST OF USERS
-app.get('/', function(req, res, next) {
+app.get('/',isAuthenticated, function(req, res, next) {
 
 	req.getConnection(function(error, conn) {
 		conn.query('SELECT * FROM students ORDER BY id ASC',function(err, rows, fields) {

@@ -1,8 +1,12 @@
 var express = require('express')
 var app = express()
 
+// Import the isAuthenticated middleware
+const isAuthenticated = require('./authMiddleware');
+
 // SHOW LIST OF STUDENTS
-app.get('/', function(req, res, next) {
+
+app.get('/index', isAuthenticated, function(req, res, next) {
 
     // render to views/index.ejs template file
 	{title: 'School Management App'}
@@ -27,7 +31,7 @@ app.get('/', function(req, res, next) {
 	})
 })
 
-app.get('/view', function(req, res, next) {
+app.get('/view', isAuthenticated, function(req, res, next) {
 
     // render to views/index.ejs template file
 	{title: 'School Management App'}
@@ -54,7 +58,7 @@ app.get('/view', function(req, res, next) {
 
 
 // SHOW ADD USER FORM
-app.get('/add', function(req, res, next){	
+app.get('/add', isAuthenticated, function(req, res, next){	
 	// render to views/user/add.ejs
 	res.render('user/add', {
 		title: 'School Management App',
@@ -66,7 +70,7 @@ app.get('/add', function(req, res, next){
 })
 
 // ADD NEW USER POST ACTION
-app.post('/add', function(req, res, next){	
+app.post('/add', isAuthenticated, function(req, res, next){	
 	req.assert('name', 'Name is required').notEmpty()           //Validate name
 	req.assert('email', 'email is required').notEmpty()             //Validate email
     req.assert('phone_num', 'A valid phone_num is required').notEmpty()  //Validate phone_num
@@ -76,15 +80,7 @@ app.post('/add', function(req, res, next){
     
     if( !errors ) {   //No errors were found.  Passed Validation!
 		
-		/********************************************
-		 * Express-validator module
-		 
-		req.body.comment = 'a <span>comment</span>';
-		req.body.username = '   a user    ';
-
-		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
-		req.sanitize('username').trim(); // returns 'a user'
-		********************************************/
+		
 		var user = {
 			name: req.sanitize('name').escape().trim(),
 			email: req.sanitize('email').escape().trim(),
@@ -151,7 +147,7 @@ app.get('/edit/(:id)', function(req, res, next){
 			// if user not found
 			if (rows.length <= 0) {
 				req.flash('error', 'Student not found with id = ' + req.params.id)
-				res.redirect('/students')
+				res.redirect('/index')
 			}
 			else { // if user found
 				// render to views/user/edit.ejs template file
@@ -255,11 +251,11 @@ app.delete('/delete/(:id)', function(req, res, next) {
 			if (err) {
 				req.flash('error', err)
 				// redirect to students list pemail
-				res.redirect('/users')
+				res.redirect('/index')
 			} else {
 				req.flash('success', 'Student deleted successfully! id = ' + req.params.id)
 				// redirect to students list pemail
-				res.redirect('/users')
+				res.redirect('/index')
 			}
 		})
 	})

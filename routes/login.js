@@ -15,9 +15,7 @@ app.post('/', (req, res) => {
     let user = req.body.username;
     let passwd = req.body.password;
     const saltRounds = 10; // Number of salt rounds for bcrypt
-
-    //console.log(user, passwd);
-
+  
 
     req.getConnection(function (error, conn) {
         conn.query('SELECT username, password, role FROM users WHERE username = "' + user + '"', function (err, rows, fields) {
@@ -30,25 +28,31 @@ app.post('/', (req, res) => {
             }
             else { // if user found render to main page depend on the role!
                 const userRole = rows[0].role; // Get the role from the query result
-                const storedHashPasswd = rows[0].password;
+                const storedHashPasswd = rows[0].password; // Get the pswd from the query result
 
-                bcrypt.compare(passwd, storedHashPasswd, function(err, result) {
+                bcrypt.compare(passwd, storedHashPasswd, function (err, result) {
 
                     if (result === true) {
                         // Passwords match, allow user to log in
+                       
+                        // After successful login
+                        req.session.authenticated = true;
+                        req.session.username = user;                       
+
                         if (userRole === 'Professor') {
-                            res.redirect('/'); //Redirect to students page which contain edit and delete buttons
+                            res.redirect('/index'); //Redirect to students page which contain edit and delete buttons
                         } else {
                             // Redirect to students_view page
                             res.redirect('/view');
                         }
+
                     } else {
                         // Passwords don't match, deny login                       
                         req.flash('message', 'Passwords dont match, deny login.')
                         res.redirect('/login');
                     }
-                   
-                });                
+
+                });
             }
         })
     })
