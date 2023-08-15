@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #main {
+        align-items: center;
+        text-align: center;
+        margin: 50px;
+        padding: 20px;
+        border: 2px solid red;
+    }
+</style>
+
+
+<body>
+    <div style="align-items: end; text-align: end;">
+        <button id="signupButton">Sign Up</button>
+    </div>
+
+    <div id="main">
+        <form action="/login" method="post">
+            <% if (flashMessage) { %>
+                <p>
+                    <%= flashMessage %>
+                </p>
+                <% } %>
+                    <label for="">Username</label>
+                    <br>
+                    <input type="text" name="username">
+                    <br>
+                    <label for="">Password</label>
+                    <br>
+                    <input type="password" name="password">
+                    <br>
+                    <button>Login</button>
+        </form>       
+    </div>
+    
+</body>
+
+<script>
+    // Get the button element by its ID
+    const signupButton = document.getElementById('signupButton');
+
+    // Add a click event listener to the button
+    signupButton.addEventListener('click', function() {
+        // Redirect to the desired URL
+        window.location.href = 'http://localhost/signup'; // Replace '/signup' with the actual URL
+    });
+</script>
+</html>

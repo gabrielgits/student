@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+
+<style>
+    #main {
+        align-items: center;
+        text-align: center;
+        margin: 50px;
+        padding: 20px;
+        border: 2px solid red;
+    }
+</style>
+
+<body>
+    <form action="/signup" method="post">
+        <div id="main">
+            <% if (flashMessage) { %>
+                <p>
+                    <%= flashMessage %>
+                </p>
+                <% } %>
+            <label for="">Username</label>
+            <br>
+            <input type="text" name="username">
+            <br>
+            <label for="">Password</label>
+            <br>
+            <input type="password" name="password">
+            <br>
+            <label for="">Role</label>
+            <select name="role" id="">
+                <option value="Student"> Student</option>
+                <option value="Professor"> Professor</option>
+            </select>
+            <br>
+            <br>
+            <button>Save</button>
+        </div>
+    </form>
+</body>
+
+</html>

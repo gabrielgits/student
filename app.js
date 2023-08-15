@@ -34,11 +34,13 @@ app.use(myConnection(mysql, dbOptions, 'pool'))
 app.set('view engine', 'ejs')
 
 /**
- * import routes/index.js
- * import routes/users.js
+ * import routes
  */
 var index = require('./routes/index')
 var users = require('./routes/students')
+var view=require('./routes/students_view')
+var login = require('./routes/login')
+var signup = require('./routes/signup')
 
 
 /**
@@ -84,14 +86,6 @@ app.use(methodOverride(function (req, res) {
     }
 }))
 
-/**
- * This module shows flash messages
- * generally used to show success or error messages
- * 
- * Flash messages are stored in session
- * So, we also have to install and use 
- * cookie-parser & session modules
- */
 var flash = require('express-flash')
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -108,9 +102,15 @@ app.use(flash())
 
 app.use('/', index)
 app.use('/users', users)
+app.use('/view', view)
+app.use('/login', login)
+app.use('/signup', signup)
 app.use(express.static(__dirname + '/dist'));
 
 var port = process.env.PORT || 80;
 app.listen(port, function () {
     console.log('Server running on port ' + port);
 })
+
+
+//*****************Login Part Below Lines******************************* */
