@@ -21,7 +21,7 @@ including header content which is common for all pages
         <th>Email</th>
         <th>Mobile Number</th>
         <th>Age</th>
-		<% if (data.userRole === 'Professor') { %>
+		<% if (data.userRole == 'Professor') { %>
         <th colspan='2' class='pull-right'>Actions</th>
 		<% } %>
       </tr>
@@ -42,7 +42,7 @@ including header content which is common for all pages
 					<td><%= user.email %></td>
 					<td><%= user.phone_num %></td>
 					<td><%= user.age %></td>
-					<% if (userRole == 'Professor') { %>
+					<% if (data.userRole == 'Professor') { %>
 					<td>
 						<div>
 							<a href='/users/edit/<%= user.id %>' class='btn btn-info'>Edit</a> &nbsp;

@@ -10,8 +10,10 @@
 	<body>
 	<div class="nav_links pull-right">
 			<a href="/view">Home</a> 
+			<% if (data.userRole == 'Professor') { %>
 			<a href="/users/add">Add New Student</a> 
-			<a href="/index">All Students List</a>
+			<% } %>
+			<a href="/users">All Students List</a>
 		</div>
 	
 	    <div class="main_bg"></div>
