@@ -40,3 +40,28 @@ a:hover {
 tr:nth-child(even){
 	background-color: #f2f2f2
 }
+#search {
+	float: right; 
+	margin-right: 30px; 
+	margin-top: -50px;
+}
+#searchInput{
+	width: 200px; 
+	height: 30px;
+	outline: none;
+	border: 1.5px solid #42be66;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+#searchBtn{
+	padding: 5px 10px;
+    outline: none;
+    border: none;
+    background-color: #42be66;
+	color: #ffffff;
+    border-radius:5px;
+    line-height: 1.5;
+    font-size: 14px;
+    margin-top: 5px;
+}
