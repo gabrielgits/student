@@ -25,8 +25,8 @@
   <div class="app_title text-center">
     <h2><%= title %></h2>
     <div id="search">
-      <form action="/search" method="post">
-        <input id="searchInput" type="text" placeholder="Enter name to search..." />
+      <form action="/users" method="get">
+        <input id="searchInput" name="search" type="text" placeholder="Enter name to search..." />
         <button id="searchBtn" type="submit">Search</button>
       </form>
     </div>

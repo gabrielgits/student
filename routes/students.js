@@ -3,18 +3,26 @@ var app = express()
 
 // Import the isAuthenticated middleware
 var isAuthenticated = require('./authMiddleware');
+const { query } = require('express');
 
 // SHOW LIST OF STUDENTS
 
 app.get('/', isAuthenticated, function(req, res, next) {
-
+	console.log(req.query);
     // render to views/index.ejs template file
 	{title: 'School Management App'}
 
 	let userRole = req.session.role;
 	
 	req.getConnection(function(error, conn) {
-		conn.query('SELECT * FROM students ORDER BY id DESC',function(err, rows, fields) {
+		let q = 'SELECT * FROM students ';
+		if (req.query.search != undefined){
+			q +=`WHERE name LIKE '%${req.query.search}%'`;
+		}
+		q += ' ORDER BY id DESC';
+
+		console.log(q);
+		conn.query(q,function(err, rows, fields) {
 			//if(err) throw err
 			if (err) {
 				req.flash('error', err)
