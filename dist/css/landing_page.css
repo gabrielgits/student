@@ -9,6 +9,7 @@
 
 .wc {
     color: #2B9A4A;
+    font-size: 60px;
 }
 
 button{
@@ -18,7 +19,7 @@ button{
     background-color: #ffffff;
     border-radius:5px;
     line-height: 1.5;
-    font-size: 14px;
+    font-size: 17px;
 }
 
 #start {
@@ -42,6 +43,7 @@ button{
     padding: 15px;
     background-color: #42be66;
     color: whitesmoke;
+    font-size: 17px;
 }
 
 #content {
@@ -59,6 +61,7 @@ button{
     justify-content: center;
     align-items: center;
     padding: 40px;
+    margin-bottom: 50px;
 }
 
 #footer {
