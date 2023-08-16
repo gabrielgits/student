@@ -35,31 +35,6 @@ app.get('/', isAuthenticated, function(req, res, next) {
 	})
 })
 
-app.get('/view', isAuthenticated, function(req, res, next) {
-	console.log('bla2')
-    // render to views/index.ejs template file
-	{title: 'School Management App'}
-
-	req.getConnection(function(error, conn) {
-		conn.query('SELECT * FROM students ORDER BY id DESC',function(err, rows, fields) {
-			//if(err) throw err
-			if (err) {
-				req.flash('error', err)
-				res.render('user/list_view', {
-					title: 'Students List', 
-					data: ''
-				})
-			} else {
-				// render to views/user/list.ejs template file
-				res.render('user/list_view', {
-					title: 'Students List', 
-					data: rows
-				})
-			}
-		})
-	})
-})
-
 
 // SHOW ADD USER FORM
 app.get('/add', isAuthenticated, function(req, res, next){	

@@ -1,0 +1,15 @@
+var config = {
+    database: {
+        host: '127.0.0.1', 	// database host
+        user: 'your mysql user', 		// your database username
+        password: 'your mysql password', 		// your database password
+        port: 3306, 		// default MySQL port
+        db: 'database name' 		// your database name
+    },
+    server: {
+        host: '127.0.0.1',
+        port: '80'
+    }
+}
+
+module.exports = config
