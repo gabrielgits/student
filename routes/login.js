@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 // Define the /login routes here
 app.get('/', (req, res) => {
     let flashMessage = req.flash('message')[0];
-    console.log(flashMessage);
+   // console.log(flashMessage);
     res.render('login/login.ejs', { flashMessage: flashMessage });
 })
 
@@ -38,13 +38,14 @@ app.post('/', (req, res) => {
                         // After successful login
                         req.session.authenticated = true;
                         req.session.username = user;                       
+                        req.session.role = userRole;                       
 
-                        if (userRole === 'Professor') {
-                            res.redirect('/index'); //Redirect to students page which contain edit and delete buttons
-                        } else {
+                    //    if (userRole === 'Professor') {
+                       //     res.redirect('/index', {userRole:userRole}); //Redirect to students page which contain edit and delete buttons
+                     //   } else {
                             // Redirect to students_view page
-                            res.redirect('/view');
-                        }
+                            res.redirect('/users');
+                    //    }
 
                     } else {
                         // Passwords don't match, deny login                       

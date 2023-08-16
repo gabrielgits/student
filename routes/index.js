@@ -5,6 +5,8 @@ const isAuthenticated = require('./authMiddleware');
 // SHOW LIST OF USERS
 app.get('/',isAuthenticated, function(req, res, next) {
 
+	console.log('log10')
+
 	req.getConnection(function(error, conn) {
 		conn.query('SELECT * FROM students ORDER BY id ASC',function(err, rows, fields) {
 			//if(err) throw err
@@ -18,7 +20,7 @@ app.get('/',isAuthenticated, function(req, res, next) {
 				// render to views/user/list.ejs template file
 				res.render('user/list', {
 					title: 'School Management App', 
-					data: rows
+					data: {rows, userRole}
 				})
 			}
 		})

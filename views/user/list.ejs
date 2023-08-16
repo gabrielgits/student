@@ -21,7 +21,9 @@ including header content which is common for all pages
         <th>Email</th>
         <th>Mobile Number</th>
         <th>Age</th>
+		<% if (data.userRole === 'Professor') { %>
         <th colspan='2' class='pull-right'>Actions</th>
+		<% } %>
       </tr>
     </thead>
 	
@@ -33,13 +35,14 @@ including header content which is common for all pages
 		});
 	-->
 	    <tbody>
-			<% if (data) { %>
-			<% data.forEach(function(user){ %>
+			<% if (data.rows) { %>
+			<% data.rows.forEach(function(user){ %>
 				<tr>
 					<td><%= user.name %></td>
 					<td><%= user.email %></td>
 					<td><%= user.phone_num %></td>
 					<td><%= user.age %></td>
+					<% if (userRole == 'Professor') { %>
 					<td>
 						<div>
 							<a href='/users/edit/<%= user.id %>' class='btn btn-info'>Edit</a> &nbsp;
@@ -51,6 +54,7 @@ including header content which is common for all pages
 							</form>
 						</div>
 					</td>
+					<% } %>
 				</tr>
 			<% }) %>
 			<% } %>

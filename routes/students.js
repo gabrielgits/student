@@ -6,11 +6,14 @@ const isAuthenticated = require('./authMiddleware');
 
 // SHOW LIST OF STUDENTS
 
-app.get('/index', isAuthenticated, function(req, res, next) {
+app.get('/', isAuthenticated, function(req, res, next) {
+	console.log('bla')
 
     // render to views/index.ejs template file
 	{title: 'School Management App'}
 
+	let userRole = req.session.role;
+	
 	req.getConnection(function(error, conn) {
 		conn.query('SELECT * FROM students ORDER BY id DESC',function(err, rows, fields) {
 			//if(err) throw err
@@ -22,9 +25,10 @@ app.get('/index', isAuthenticated, function(req, res, next) {
 				})
 			} else {
 				// render to views/user/list.ejs template file
+				console.log(rows)
 				res.render('user/list', {
 					title: 'Students List', 
-					data: rows
+					data: {rows, userRole}
 				})
 			}
 		})
@@ -32,7 +36,7 @@ app.get('/index', isAuthenticated, function(req, res, next) {
 })
 
 app.get('/view', isAuthenticated, function(req, res, next) {
-
+	console.log('bla2')
     // render to views/index.ejs template file
 	{title: 'School Management App'}
 
@@ -59,6 +63,7 @@ app.get('/view', isAuthenticated, function(req, res, next) {
 
 // SHOW ADD USER FORM
 app.get('/add', isAuthenticated, function(req, res, next){	
+	console.log('bla3')
 	// render to views/user/add.ejs
 	res.render('user/add', {
 		title: 'School Management App',
@@ -71,6 +76,7 @@ app.get('/add', isAuthenticated, function(req, res, next){
 
 // ADD NEW USER POST ACTION
 app.post('/add', isAuthenticated, function(req, res, next){	
+	console.log('bla4')
 	req.assert('name', 'Name is required').notEmpty()           //Validate name
 	req.assert('email', 'email is required').notEmpty()             //Validate email
     req.assert('phone_num', 'A valid phone_num is required').notEmpty()  //Validate phone_num
@@ -140,6 +146,7 @@ app.post('/add', isAuthenticated, function(req, res, next){
 
 // SHOW EDIT USER FORM
 app.get('/edit/(:id)', function(req, res, next){
+	console.log('bla5')
 	req.getConnection(function(error, conn) {
 		conn.query('SELECT * FROM students WHERE id = ' + req.params.id, function(err, rows, fields) {
 			if(err) throw err
@@ -167,6 +174,7 @@ app.get('/edit/(:id)', function(req, res, next){
 
 // EDIT USER POST ACTION
 app.put('/edit/(:id)', function(req, res, next) {
+	console.log('bla6')
 	req.assert('name', 'Name is required').notEmpty()           //Validate name
 	req.assert('email', 'Email is required').notEmpty()             //Validate email
     req.assert('phone_num', 'A valid phone_num is required').notEmpty()  //Validate phone_num
@@ -243,6 +251,7 @@ app.put('/edit/(:id)', function(req, res, next) {
 
 // DELETE USER
 app.delete('/delete/(:id)', function(req, res, next) {
+	console.log('bla7')
 	var user = { id: req.params.id }
 	
 	req.getConnection(function(error, conn) {

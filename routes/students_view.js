@@ -5,6 +5,7 @@ const isAuthenticated = require('./authMiddleware');
 // SHOW LIST OF STUDENTS
 
 app.get('/', isAuthenticated, function(req, res, next) {
+	console.log('bla9')
 
     // render to views/index.ejs template file
 	{title: 'School Management App'}

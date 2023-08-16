@@ -6,12 +6,7 @@ var mysql = require('mysql')
 /**
  * import routes
  */
-var index = require('./routes/index')
-var studets = require('./routes/students')
-var view= require('./routes/students_view')
-var login = require('./routes/login')
-var signup = require('./routes/signup')
-var home = require('./routes/home')
+
 
 /**
  * This middleware provides a consistent API 
@@ -98,6 +93,13 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 60000 }
 }))
+
+var index = require('./routes/index')
+var studets = require('./routes/students')
+var view= require('./routes/students_view')
+var login = require('./routes/login')
+var signup = require('./routes/signup')
+var home = require('./routes/home')
 
 
 app.use(flash())
