@@ -2,7 +2,7 @@ var express = require('express')
 var app = express()
 
 // Import the isAuthenticated middleware
-const isAuthenticated = require('./authMiddleware');
+var isAuthenticated = require('./authMiddleware');
 
 // SHOW LIST OF STUDENTS
 
@@ -237,8 +237,7 @@ app.put('/edit/(:id)',isAuthenticated, function(req, res, next) {
 // DELETE USER
 app.delete('/delete/(:id)',isAuthenticated, function(req, res, next) {
 	
-	var user = { id: req.params.id }
-	
+	var user = { id: req.params.id }	
 	
 	req.getConnection(function(error, conn) {
 		conn.query('DELETE FROM students WHERE id = ' + req.params.id, user, function(err, result) {
@@ -246,11 +245,11 @@ app.delete('/delete/(:id)',isAuthenticated, function(req, res, next) {
 			if (err) {
 				req.flash('error', err)
 				// redirect to students list pemail
-				res.redirect('/index')
+				res.redirect('/users')
 			} else {
 				req.flash('success', 'Student deleted successfully! id = ' + req.params.id)
 				// redirect to students list pemail
-				res.redirect('/index')
+				res.redirect('/users')
 			}
 		})
 	})
