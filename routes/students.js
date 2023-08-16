@@ -7,7 +7,6 @@ const isAuthenticated = require('./authMiddleware');
 // SHOW LIST OF STUDENTS
 
 app.get('/', isAuthenticated, function(req, res, next) {
-	console.log('bla')
 
     // render to views/index.ejs template file
 	{title: 'School Management App'}
@@ -25,7 +24,7 @@ app.get('/', isAuthenticated, function(req, res, next) {
 				})
 			} else {
 				// render to views/user/list.ejs template file
-				console.log(rows)
+				//console.log(rows)
 				res.render('user/list', {
 					title: 'Students List', 
 					data: {rows, userRole}
@@ -38,9 +37,12 @@ app.get('/', isAuthenticated, function(req, res, next) {
 
 // SHOW ADD USER FORM
 app.get('/add', isAuthenticated, function(req, res, next){	
-	console.log('bla3')
+	let userRole = req.session.role;
+	
+	
 	// render to views/user/add.ejs
 	res.render('user/add', {
+		data: {userRole},
 		title: 'School Management App',
 		name: '',
 		email: '',
@@ -51,7 +53,9 @@ app.get('/add', isAuthenticated, function(req, res, next){
 
 // ADD NEW USER POST ACTION
 app.post('/add', isAuthenticated, function(req, res, next){	
-	console.log('bla4')
+
+	let userRole = req.session.role;
+	
 	req.assert('name', 'Name is required').notEmpty()           //Validate name
 	req.assert('email', 'email is required').notEmpty()             //Validate email
     req.assert('phone_num', 'A valid phone_num is required').notEmpty()  //Validate phone_num
@@ -77,6 +81,7 @@ app.post('/add', isAuthenticated, function(req, res, next){
 					
 					// render to views/user/add.ejs
 					res.render('user/add', {
+						data: {userRole},
 						title: 'Add New Student',
 						name: user.name,
 						email: user.email,
@@ -88,6 +93,7 @@ app.post('/add', isAuthenticated, function(req, res, next){
 					
 					// render to views/user/add.ejs
 					res.render('user/add', {
+						data: {userRole},
 						title: 'Add New Student',
 						name: '',
 						email: '',
@@ -109,7 +115,8 @@ app.post('/add', isAuthenticated, function(req, res, next){
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */ 
-        res.render('user/add', { 
+        res.render('user/add', {
+			data: {userRole}, 
             title: 'Add New Student',
             name: req.body.name,
             email: req.body.email,
@@ -120,8 +127,10 @@ app.post('/add', isAuthenticated, function(req, res, next){
 })
 
 // SHOW EDIT USER FORM
-app.get('/edit/(:id)', function(req, res, next){
-	console.log('bla5')
+app.get('/edit/(:id)',isAuthenticated, function(req, res, next){
+
+	let userRole = req.session.role;
+	
 	req.getConnection(function(error, conn) {
 		conn.query('SELECT * FROM students WHERE id = ' + req.params.id, function(err, rows, fields) {
 			if(err) throw err
@@ -134,6 +143,7 @@ app.get('/edit/(:id)', function(req, res, next){
 			else { // if user found
 				// render to views/user/edit.ejs template file
 				res.render('user/edit', {
+					data: {userRole},
 					title: 'Edit Student Info', 
 					//data: rows[0],
 					id: rows[0].id,
@@ -148,8 +158,10 @@ app.get('/edit/(:id)', function(req, res, next){
 })
 
 // EDIT USER POST ACTION
-app.put('/edit/(:id)', function(req, res, next) {
-	console.log('bla6')
+app.put('/edit/(:id)',isAuthenticated, function(req, res, next) {
+
+	let userRole = req.session.role;
+	
 	req.assert('name', 'Name is required').notEmpty()           //Validate name
 	req.assert('email', 'Email is required').notEmpty()             //Validate email
     req.assert('phone_num', 'A valid phone_num is required').notEmpty()  //Validate phone_num
@@ -157,13 +169,8 @@ app.put('/edit/(:id)', function(req, res, next) {
 
     var errors = req.validationErrors()
     
-    if( !errors ) {   //No errors were found.  Passed Validation!
-		
-		/********************************************
-		 * Express-validator module
-		 
-		req.sanitize('username').trim(); // returns 'a user'
-		********************************************/
+    if( !errors ) {  
+
 		var user = {
 			name: req.sanitize('name').escape().trim(),
 			email: req.sanitize('email').escape().trim(),
@@ -179,6 +186,7 @@ app.put('/edit/(:id)', function(req, res, next) {
 					
 					// render to views/user/add.ejs
 					res.render('user/edit', {
+						data: {userRole},
 						title: 'Edit Student Info',
 						id: req.params.id,
 						name: req.body.name,
@@ -191,6 +199,7 @@ app.put('/edit/(:id)', function(req, res, next) {
 					
 					// render to views/user/add.ejs
 					res.render('user/edit', {
+						data: {userRole},
 						title: 'Edit Student Info',
 						id: req.params.id,
 						name: req.body.name,
@@ -213,7 +222,8 @@ app.put('/edit/(:id)', function(req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */ 
-        res.render('user/edit', { 
+        res.render('user/edit', {
+			data: {userRole}, 
             title: 'Edit Student Info',            
 			id: req.params.id, 
 			name: req.body.name,
@@ -225,9 +235,10 @@ app.put('/edit/(:id)', function(req, res, next) {
 })
 
 // DELETE USER
-app.delete('/delete/(:id)', function(req, res, next) {
-	console.log('bla7')
+app.delete('/delete/(:id)',isAuthenticated, function(req, res, next) {
+	
 	var user = { id: req.params.id }
+	
 	
 	req.getConnection(function(error, conn) {
 		conn.query('DELETE FROM students WHERE id = ' + req.params.id, user, function(err, result) {
