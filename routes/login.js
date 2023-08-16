@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 // Define the /login routes here
 app.get('/', (req, res) => {
     let flashMessage = req.flash('message')[0];
-   // console.log(flashMessage);
+    // console.log(flashMessage);
     res.render('login/login.ejs', { flashMessage: flashMessage });
 })
 
@@ -15,7 +15,7 @@ app.post('/', (req, res) => {
     let user = req.body.username;
     let passwd = req.body.password;
     const saltRounds = 10; // Number of salt rounds for bcrypt
-  
+
 
     req.getConnection(function (error, conn) {
         conn.query('SELECT username, password, role FROM users WHERE username = "' + user + '"', function (err, rows, fields) {
@@ -34,18 +34,12 @@ app.post('/', (req, res) => {
 
                     if (result === true) {
                         // Passwords match, allow user to log in
-                       
+
                         // After successful login
                         req.session.authenticated = true;
-                        req.session.username = user;                       
-                        req.session.role = userRole;                       
-
-                    //    if (userRole === 'Professor') {
-                       //     res.redirect('/index', {userRole:userRole}); //Redirect to students page which contain edit and delete buttons
-                     //   } else {
-                            // Redirect to students_view page
-                            res.redirect('/users');
-                    //    }
+                        req.session.username = user;
+                        req.session.role = userRole;
+                        res.redirect('/users');
 
                     } else {
                         // Passwords don't match, deny login                       
