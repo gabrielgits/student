@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 // Define the /signup routes here
 app.get('/', (req, res) => {
     let flashMessage = req.flash('message')[0];
-    console.log(flashMessage);
+    //console.log(flashMessage);
     res.render('login/signup.ejs', { flashMessage: flashMessage });
 })
 
@@ -14,7 +14,7 @@ app.post('/', (req, res) => {
     let user = req.body.username.trim();
     let passwd = req.body.password.trim();
     let role = req.body.role;
-    console.log(user, passwd, role);
+   
 
     const saltRounds = 10; // Number of salt rounds for bcrypt
 

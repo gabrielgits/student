@@ -40,14 +40,3 @@ a:hover {
 tr:nth-child(even){
 	background-color: #f2f2f2
 }
-
-.export-data{
-	margin: 20px;
-    background-color: #5bc0de;
-    border: 0px;
-    padding: 8px;
-    border-radius: 5px;
-    color: white;
-
-}
-
