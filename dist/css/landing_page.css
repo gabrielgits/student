@@ -103,6 +103,8 @@ button {
     grid-template-columns: 4fr 1fr;
     color: rgb(41, 35, 35);
     font-size: 20px;
+    background-color: white;
+    text-align: right;
 }
 
 .cardImg {
