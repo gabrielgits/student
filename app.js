@@ -40,7 +40,7 @@ var home = require('./routes/home')
 var studets = require('./routes/students')
 var login = require('./routes/login')
 var signup = require('./routes/signup')
-
+var excelJs = require('./routes/excelJs')
 
 
 app.use(flash())
@@ -50,6 +50,7 @@ app.use('/users', studets)
 app.use('/login', login)
 app.use('/signup', signup)
 app.use(express.static(__dirname + '/dist'));
+app.use('/generate-excel',excelJs) ;
 
 var port = process.env.PORT || 80;
 app.listen(port, function () {
