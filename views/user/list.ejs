@@ -12,7 +12,33 @@ including header content which is common for all pages
 <% } %>	
 
 
-<div class="table-responsive">   
+<script>
+	const creatReport =()=>{
+		var bodyContent = document.getElementById('bodyContent');
+      var printContent = document.getElementById('printContent');
+
+      // Save the current main content
+      var originalContent = bodyContent.innerHTML;
+
+      // Set main content to print content
+      bodyContent.innerHTML = printContent.innerHTML;
+
+	  //hide the header
+	  document.getElementById('header').style.display = "none";
+
+      // Print the page
+      window.print();
+
+	  //show the header back
+	  document.getElementById('header').style.display = "block";
+
+      // Reset main content after printing
+      bodyContent.innerHTML = originalContent;
+	}
+</script>
+
+
+<div class="table-responsive" id="bodyContent">   
   <table class='table'>
 
 	<thead>
@@ -56,11 +82,77 @@ including header content which is common for all pages
 					</td>
 					<% } %>
 				</tr>
-			<% }) %>
-			<% } %>
+			<% 
+		
+		}) %>
+			<% 
+
+		} %>
 		</tbody>
+		
 	</table>
+
+
+
+	<% if (data.rows) { 
+		exportData = data.rows;
+
+		%>
+	<button class="export-data"
+	onclick="creatReport()">Export Data</button>
+	<% }
+		%>
+
+		<% if (data.rows) { 
+		exportData = data.rows;
+
+		%>
+		<div id="printContent" style="display: none;">
+			<center><h4>The Report</h4></center>
+			<table class='table'>
+
+<thead>
+  <tr>
+	<th>Name</th>
+	<th>Email</th>
+	<th>Mobile Number</th>
+	<th>Age</th>
+  </tr>
+</thead>
+
+<!--
+	Using FOREACH LOOP for the users array
+	
+	myArray.forEach(function(el, index) {
+		// el - current element, i - index
+	});
+-->
+	<tbody>
+		<% if (data.rows) { %>
+		<% data.rows.forEach(function(user){ %>
+			<tr>
+				<td><%= user.name %></td>
+				<td><%= user.email %></td>
+				<td><%= user.phone_num %></td>
+				<td><%= user.age %></td>
+				
+			</tr>
+		<% 
+	
+	}) %>
+		<% 
+
+	} %>
+	</tbody>
+	
+</table>
+
+		</div>
+	<% }
+		%>
+	
 	</div>
+	
 
 <!--
 including footer content which is common for all pages
