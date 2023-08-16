@@ -20,6 +20,7 @@ button{
     border-radius:5px;
     line-height: 1.5;
     font-size: 17px;
+    margin-top: 5px;
 }
 
 #start {
@@ -33,6 +34,9 @@ button{
 }
 
 #logo {
+    width: 50px;
+    border-radius: 25px;
+    margin-bottom: -5px;
 }
 
 #nav {
@@ -40,7 +44,7 @@ button{
     justify-content: space-around;
     gap: 400px;
     /* border: 1px solid red; */
-    padding: 15px;
+    padding: 10px;
     background-color: #42be66;
     color: whitesmoke;
     font-size: 17px;

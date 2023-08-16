@@ -37,7 +37,7 @@ app.post('/', (req, res) => {
                         res.render('login/signup.ejs', { flashMessage: req.flash('message')[0] });
                     } else {
                         req.flash('message', 'User created successfully!');
-                        res.render('login/signup.ejs', { flashMessage: req.flash('message')[0] });
+                        res.render('login/login.ejs', { flashMessage: req.flash('message')[0] });
                     }
                 })
             })
